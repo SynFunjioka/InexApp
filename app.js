@@ -5,6 +5,9 @@ const mongoose = require("mongoose");
 //* My modules
 const { mongoURI, options } = require("./config/mongo.config");
 
+//* Modals
+const { User } = require("./models/user.model");
+
 mongoose
   .connect(mongoURI, options)
   .then(() => {
@@ -18,10 +21,27 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/fileName.html");
+app.get("/", async (req, res) => {
+  res.send("Welcome to the InexApp API");
 });
 
 app.listen(3000, () => {
   console.log("App listening on port 3000");
 });
+
+//Ejemplo para crear un usuario
+
+/* const user = new User({
+    username: "root",
+    email: "root@root.com",
+    password: "12345678",
+  });
+
+  await user
+    .save()
+    .then((res) => {
+      console.log("Usuario root registrado", res);
+    })
+    .then((error) =>
+      console.error("Something went wrong during process", error)
+    ); */
