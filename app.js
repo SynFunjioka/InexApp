@@ -2,7 +2,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/InexApp");
+//* My modules
+const { mongoURI, options } = require("./config/mongo.config");
+
+mongoose
+  .connect(mongoURI, options)
+  .then(() => {
+    console.log("Conexión exitosa a MongoDB");
+  })
+  .catch((error) => {
+    console.error("Error al conectar a MongoDB:", error);
+  });
 
 const app = express();
 
