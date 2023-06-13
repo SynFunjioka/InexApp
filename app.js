@@ -5,7 +5,10 @@ const mongoose = require("mongoose");
 //* My modules
 const { mongoURI, options } = require("./config/mongo.config");
 
-//* Modals
+//* My Routes
+const userRoutes = require("./routes/user.route");
+
+//* Models
 const { User } = require("./models/user.model");
 
 mongoose
@@ -19,7 +22,11 @@ mongoose
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
+//🔵 Route inports will be here
+app.use("/users", userRoutes);
 
 app.get("/", async (req, res) => {
   res.send("Welcome to the InexApp API");
