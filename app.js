@@ -7,10 +7,9 @@ const { mongoURI, options } = require("./config/mongo.config");
 
 //* My Routes
 const userRoutes = require("./routes/user.route");
+const transactionRoutes = require("./routes/transaction.route");
 
-//* Models
-const { User } = require("./models/user.model");
-
+//* Connect to MongoDB
 mongoose
   .connect(mongoURI, options)
   .then(() => {
@@ -25,8 +24,10 @@ const app = express();
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-//🔵 Route inports will be here
+//🔵 Route imports will be here
 app.use("/users", userRoutes);
+app.use("/transactions", transactionRoutes);
+//🔵 =========================================
 
 app.get("/", async (req, res) => {
   res.send("Welcome to the InexApp API");
@@ -35,20 +36,3 @@ app.get("/", async (req, res) => {
 app.listen(3000, () => {
   console.log("App listening on port 3000");
 });
-
-//Ejemplo para crear un usuario
-
-/* const user = new User({
-    username: "root",
-    email: "root@root.com",
-    password: "12345678",
-  });
-
-  await user
-    .save()
-    .then((res) => {
-      console.log("Usuario root registrado", res);
-    })
-    .then((error) =>
-      console.error("Something went wrong during process", error)
-    ); */

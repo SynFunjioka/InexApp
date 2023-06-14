@@ -5,6 +5,13 @@ const userSchema = mongoose.Schema(
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false },
+    transactions: { 
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Transaction'
+        }
+      ], default: []},
     deleted: { type: Boolean, default: false },
   },
   { timestamps: true }
@@ -12,4 +19,5 @@ const userSchema = mongoose.Schema(
 
 userSchema.set("toJSON", { getters: true, virtuals: false });
 
+module.exports.userSchema = userSchema;
 module.exports.User = mongoose.model("User", userSchema);

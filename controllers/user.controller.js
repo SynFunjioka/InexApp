@@ -10,6 +10,7 @@ const { User } = require("../models/user.model");
  * @param {*} res Response
  * @return JSON of user from User Model
  */
+//📌 Implement queries
 function GetUsers(req, res) {
   const myReq = req.query;
   console.log("My get queries", myReq);
