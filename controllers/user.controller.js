@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const { Hash } = require("../util/secret.util");
+
 //* Model
 const { User } = require("../models/user.model");
 
@@ -44,13 +46,22 @@ function GetUser(req, res) {
 function CreateUser(req, res) {
   const { username, email, password } = req.body;
 
-  const user = new User({
-    username,
-    email,
-    password,
-  });
+  Hash(password).then(hashedPassword => {
+    console.log('hashedPassword', hashedPassword);
 
-  user.save().then((newUser) => {
+    const user = new User({
+      username,
+      email,
+      password: hashedPassword,
+    });
+  
+    console.log('user password', user.password);
+  
+    return user.save();
+  })
+  .then(newUser => {
+
+    delete newUser.password;
     res.status(200).json({
       success: true,
       message: "New user added successfully",

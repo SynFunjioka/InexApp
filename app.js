@@ -8,6 +8,7 @@ const { mongoURI, options } = require("./config/mongo.config");
 //* My Routes
 const userRoutes = require("./routes/user.route");
 const transactionRoutes = require("./routes/transaction.route");
+const authRoutes = require("./routes/auth.router");
 
 //* Connect to MongoDB
 mongoose
@@ -27,6 +28,7 @@ app.use(express.json());
 //🔵 Route imports will be here
 app.use("/users", userRoutes);
 app.use("/transactions", transactionRoutes);
+app.use("/auth", authRoutes);
 //🔵 =========================================
 
 app.get("/", async (req, res) => {
