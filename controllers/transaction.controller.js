@@ -10,14 +10,22 @@ const { User } = require("../models/user.model");
  * @param {*} res Response
  * @return JSON of transaction from Transactions Model
  */
-//📌 Implement queries
-function GetTransactions(req, res) {
-  const myReq = req.query;
-  //   console.log("My get queries", myReq);
 
-  Transaction.find()
-    .then((trcn) => res.json(trcn))
-    .catch((error) => res.json(error));
+function GetTransactions(req, res) {
+  const {deleted = null} = req.query;
+  const where = {};
+
+  if(deleted){
+    if(deleted === 'true'){
+      where.deleted = true;
+    }else if(deleted === 'false'){
+      where.deleted = false;
+    }
+  }
+
+  Transaction.find(where)
+    .then((trcn) => res.json({success: true, transactions: trcn}))
+    .catch((error) => res.json({success: false, error}));
 }
 
 /**
