@@ -1,5 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const jwt = require('jsonwebtoken');
+
+const { SECRET } = process.env;
 
 const { Hash, HashCompare} = require("../util/secret.util");
 
@@ -22,6 +25,8 @@ function Login(req, res) {
         if(!match){
           loginResponse.message = "Invalid password";
         }
+        loginResponse.user = user;
+        loginResponse.token = CreateToken(user._id, user.email);
         res.json(loginResponse);
       });
     }else{
@@ -30,6 +35,17 @@ function Login(req, res) {
   }).catch(err => {
     res.status(500).json({err});
   });
+}
+
+function CreateToken(userID, email){
+  const payload = {
+    id: userID,
+    email
+  };
+
+  const token = jwt.sign(payload, SECRET, { expiresIn: '5s' });
+
+  return token;
 }
 
 module.exports = {

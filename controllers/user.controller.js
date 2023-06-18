@@ -34,7 +34,7 @@ function GetUser(req, res) {
 
   User.findById(id)
     .then((user) => res.json(user))
-    .catch((error) => res.json(error));
+    .catch((error) => res.json({message: `API error: Could not get the user ${id}`, error}));
 }
 
 /**
