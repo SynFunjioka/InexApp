@@ -12,7 +12,7 @@ const { User } = require("../models/user.model");
  */
 
 function GetTransactions(req, res) {
-  const {deleted = null} = req.query;
+  const {deleted = null, user = null, fecha = ""} = req.query;
   const where = {};
 
   if(deleted){
@@ -21,6 +21,19 @@ function GetTransactions(req, res) {
     }else if(deleted === 'false'){
       where.deleted = false;
     }
+  }
+
+  if(user){
+    where.user_id = user;
+  }
+
+  if(fecha){
+    const currentDate = new Date(fecha);
+    const currentDateEnd = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+    where.createdAt = {
+      $gte: currentDate,
+      $lt: currentDateEnd
+    };
   }
 
   Transaction.find(where)
