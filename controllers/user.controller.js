@@ -38,47 +38,6 @@ function GetUser(req, res) {
 }
 
 /**
- * *CREATE NEW USER
- * @param {*} req  Has the body from request
- * @param {*} res Response
- * @return JSON of new user from User Model
- */
-function CreateUser(req, res) {
-  const { username, email, password } = req.body;
-
-  Hash(password).then(hashedPassword => {
-    console.log('hashedPassword', hashedPassword);
-
-    const user = new User({
-      username,
-      email,
-      password: hashedPassword,
-    });
-  
-    console.log('user password', user.password);
-  
-    return user.save();
-  })
-  .then(newUser => {
-
-    delete newUser.password;
-    res.status(200).json({
-      success: true,
-      message: "New user added successfully",
-      newUser,
-    });
-  })
-  .catch((error) => {
-    console.log("Error message", error);
-    res.status(400).json({
-      success: false,
-      message: "Something went wrong during process",
-      error: error,
-    });
-  });
-}
-
-/**
  * *UPDATE USER
  * @param {*} req  Has the body from request
  * @param {*} res Response
@@ -155,7 +114,6 @@ function DeleteUser_Logic(req, res) {
 module.exports = {
   GetUsers,
   GetUser,
-  CreateUser,
   UpdateUser,
   DeleteUser,
   DeleteUser_Logic,

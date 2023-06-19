@@ -4,7 +4,6 @@ const router = express.Router();
 const {
   GetUsers,
   GetUser,
-  CreateUser,
   UpdateUser,
   DeleteUser,
   DeleteUser_Logic,
@@ -13,8 +12,6 @@ const {
 router.get("/", GetUsers);
 
 router.get("/:id", GetUser);
-
-router.post("/", CreateUser);
 
 router.put("/:id", UpdateUser);
 
