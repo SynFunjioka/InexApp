@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
+const { APP_PORT } = process.env;
+
 //* My modules
 const { mongoURI, options } = require("./config/mongo.config");
 
@@ -41,6 +43,6 @@ app.get("/", async (req, res) => {
   res.send("Welcome to the InexApp API");
 });
 
-app.listen(3001, () => {
-  console.log("App listening on port 3001");
+app.listen(APP_PORT, () => {
+  console.log(`App listening on port ${APP_PORT}`);
 });
